@@ -51,6 +51,9 @@ if (! \function_exists('add_action')) {
                     'category'    => 'Category',
                     'icon'        => 'Icon',
                     'keywords'    => 'Keywords',
+                    'post_types'  => 'Post Types',
+                    'mode'        => 'Default Mode',
+                    'align'       => 'Default Alignment',
                 ]);
 
                 if (empty($file_headers['title'])) {
@@ -64,11 +67,15 @@ if (! \function_exists('add_action')) {
                 // Set up block data for registration
                 $data = [
                     'name'            => $slug,
+                    'path'            => $file_path,
                     'title'           => $file_headers['title'],
                     'description'     => $file_headers['description'],
                     'category'        => $file_headers['category'],
                     'icon'            => $file_headers['icon'],
                     'keywords'        => \explode(' ', $file_headers['keywords']),
+                    'post_types'      => \explode(' ', $file_headers['post_types']),
+                    'mode'            => $file_headers['mode'],
+                    'align'           => $file_headers['align'],
                     'render_callback' => __NAMESPACE__.'\\sage_blocks_callback',
                 ];
 
