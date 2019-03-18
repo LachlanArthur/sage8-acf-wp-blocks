@@ -7,6 +7,12 @@ Run the following in your Sage 8-based theme directory:
 composer require "lachlanarthur/sage8-acf-wp-blocks"
 ```
 
+## Requirements
+
+- Wordpress 5+
+- Advanced Custom Fields 5.8+
+- Theme based on Sage 8 (See [the original](https://github.com/MWDelaney/sage-acf-wp-blocks) for Sage 9)
+
 ## Creating blocks
 Add templates to `your-theme/wp-blocks` which get and use ACF data. Each template requires a metadata comment block with some data in it:
 ```php
