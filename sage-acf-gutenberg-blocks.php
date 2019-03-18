@@ -2,7 +2,7 @@
 
 // Adapted from Sage 9 version https://github.com/MWDelaney/sage-acf-wp-blocks
 
-namespace App;
+namespace Roots\Sage\ACF_WP_Blocks;
 
 // Check whether WordPress and ACF are available; bail if not.
 if (! \function_exists('acf_register_block')) { // Only available in ACF 5.8+
@@ -16,7 +16,7 @@ if (! \function_exists('add_action')) {
 }
 
 /**
- * Create blocks based on templates found in Sage's "views/blocks" directory
+ * Create blocks based on templates found in Sage's "wp-blocks" directory
  */
 \add_action('acf/init', function () {
 
@@ -24,7 +24,7 @@ if (! \function_exists('add_action')) {
     global $sage_error;
 
     // Get an array of directories containing blocks
-    $directories = \apply_filters('sage8-acf-wp-blocks-paths', ['views/blocks']);
+    $directories = \apply_filters('sage8-acf-wp-blocks-paths', ['wp-blocks']);
 
     // Check whether ACF exists before continuing
     foreach ($directories as $dir) {
@@ -41,10 +41,10 @@ if (! \function_exists('add_action')) {
             if (!$template->isDot() && !$template->isDir()) {
 
                 // Strip the file extension to get the slug
-                $slug = \removeBladeExtension($template->getFilename());
+                $slug = \pathinfo($template->getFilename(), PATHINFO_FILENAME);
 
                 // Get header info from the found template file(s)
-                $file_path = \locate_template($dir."/${slug}.blade.php");
+                $file_path = \locate_template("{$dir}/{$slug}.php");
                 $file_headers = \get_file_data($file_path, [
                       'title' => 'Title',
                       'description' => 'Description',
@@ -54,11 +54,11 @@ if (! \function_exists('add_action')) {
                     ]);
 
                 if (empty($file_headers['title'])) {
-                    $sage_error(__('This block needs a title: ' . $dir . '/' . $template->getFilename(), 'sage'), __('Block title missing', 'sage'));
+                    $sage_error(__('This block needs a title: ' . $file_path, 'sage' ), __('Block title missing', 'sage'));
                 }
 
                 if (empty($file_headers['category'])) {
-                    $sage_error(__('This block needs a category: ' . $dir . '/' . $template->getFilename(), 'sage'), __('Block category missing', 'sage'));
+                    $sage_error(__('This block needs a category: ' . $file_path, 'sage'), __('Block category missing', 'sage'));
                 }
 
                 // Set up block data for registration
@@ -94,21 +94,6 @@ function sage_blocks_callback($block) {
     $block['slug'] = $slug;
     $block['classes'] = \implode(' ', [$block['slug'], $block['className'], 'align'.$block['align']]);
 
-    // Use Sage's template() function to echo the block and populate it with data
-    echo \App\template("blocks/${slug}", ['block' => $block]);
-}
-
-/**
- * Function to strip the `.blade.php` from a blade filename
- * 
- * @param string $filename
- * @return string
- */
-function removeBladeExtension($filename) {
-
-    // Remove the unwanted extensions
-    $return = \substr($filename, 0, strrpos($filename, '.blade.php'));
-
-    // Always return
-    return $return;
+    \set_query_var('block', $block);
+    \load_template($block['path'], false);
 }
