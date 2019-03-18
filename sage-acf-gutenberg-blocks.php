@@ -13,11 +13,6 @@ if (! function_exists('add_action')) {
     return;
 }
 
-// Add the default blocks location, 'views/blocks', via filter
-add_filter('sage-acf-gutenberg-blocks-templates', function () {
-    return array('views/blocks');
-});
-
 /**
  * Create blocks based on templates found in Sage's "views/blocks" directory
  */
@@ -27,7 +22,7 @@ add_action('acf/init', function () {
     global $sage_error;
 
     // Get an array of directories containing blocks
-    $directories = apply_filters('sage-acf-gutenberg-blocks-templates', []);
+    $directories = apply_filters('sage8-acf-wp-blocks-paths', ['views/blocks']);
 
     // Check whether ACF exists before continuing
     foreach ($directories as $dir) {
