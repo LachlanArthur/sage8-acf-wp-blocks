@@ -28,12 +28,12 @@ if (! \function_exists('add_action')) {
 
     // Check whether ACF exists before continuing
     foreach ($directories as $dir) {
-        
+
         // Sanity check whether the directory we're iterating over exists first
         if (!\file_exists(\locate_template($dir))) {
             return;
         }
-        
+
         // Iterate over the directories provided and look for templates
         $template_directory = new \DirectoryIterator(\locate_template($dir));
 
@@ -46,12 +46,12 @@ if (! \function_exists('add_action')) {
                 // Get header info from the found template file(s)
                 $file_path = \locate_template("{$dir}/{$slug}.php");
                 $file_headers = \get_file_data($file_path, [
-                      'title' => 'Title',
-                      'description' => 'Description',
-                      'category' => 'Category',
-                      'icon' => 'Icon',
-                      'keywords' => 'Keywords',
-                    ]);
+                    'title'       => 'Title',
+                    'description' => 'Description',
+                    'category'    => 'Category',
+                    'icon'        => 'Icon',
+                    'keywords'    => 'Keywords',
+                ]);
 
                 if (empty($file_headers['title'])) {
                     $sage_error(__('This block needs a title: ' . $file_path, 'sage' ), __('Block title missing', 'sage'));
@@ -63,14 +63,14 @@ if (! \function_exists('add_action')) {
 
                 // Set up block data for registration
                 $data = [
-                      'name' => $slug,
-                      'title' => $file_headers['title'],
-                      'description' => $file_headers['description'],
-                      'category' => $file_headers['category'],
-                      'icon' => $file_headers['icon'],
-                      'keywords' => \explode(' ', $file_headers['keywords']),
-                      'render_callback'  => __NAMESPACE__.'\\sage_blocks_callback',
-                    ];
+                    'name'            => $slug,
+                    'title'           => $file_headers['title'],
+                    'description'     => $file_headers['description'],
+                    'category'        => $file_headers['category'],
+                    'icon'            => $file_headers['icon'],
+                    'keywords'        => \explode(' ', $file_headers['keywords']),
+                    'render_callback' => __NAMESPACE__.'\\sage_blocks_callback',
+                ];
 
                 // Register the block with ACF
                 \acf_register_block($data);
@@ -81,7 +81,7 @@ if (! \function_exists('add_action')) {
 
 /**
  * Callback to register blocks
- * 
+ *
  * @param array $block
  * @return void
  */
@@ -91,7 +91,7 @@ function sage_blocks_callback($block) {
     $slug = \str_replace('acf/', '', $block['name']);
 
     // Set up the block data
-    $block['slug'] = $slug;
+    $block['slug']    = $slug;
     $block['classes'] = \implode(' ', [$block['slug'], $block['className'], 'align'.$block['align']]);
 
     \set_query_var('block', $block);
