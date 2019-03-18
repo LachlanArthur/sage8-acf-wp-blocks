@@ -15,12 +15,12 @@
     },
     {
       "name": "Nico Prat"
-		}
+    }
   ],
   "require": {
     "php": ">=5.3.2"
   },
-	"autoload": {
+  "autoload": {
     "files": ["sage-acf-gutenberg-blocks.php"]
   }
 }
