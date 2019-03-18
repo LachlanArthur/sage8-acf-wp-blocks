@@ -1,9 +1,11 @@
 <?php
 
+// Adapted from Sage 9 version https://github.com/MWDelaney/sage-acf-wp-blocks
+
 namespace App;
 
 // Check whether WordPress and ACF are available; bail if not.
-if (! function_exists('acf_register_block')) {
+if (! function_exists('acf_register_block')) { // Only available in ACF 5.8+
     return;
 }
 if (! function_exists('add_filter')) {
@@ -38,7 +40,7 @@ add_action('acf/init', function () {
         foreach ($template_directory as $template) {
             if (!$template->isDot() && !$template->isDir()) {
 
-            // Strip the file extension to get the slug
+                // Strip the file extension to get the slug
                 $slug = removeBladeExtension($template->getFilename());
 
                 // Get header info from the found template file(s)
@@ -79,11 +81,13 @@ add_action('acf/init', function () {
 
 /**
  * Callback to register blocks
+ * 
+ * @param array $block
+ * @return void
  */
-function sage_blocks_callback($block)
-{
+function sage_blocks_callback($block) {
 
-  // Set up the slug to be useful
+    // Set up the slug to be useful
     $slug = str_replace('acf/', '', $block['name']);
 
     // Set up the block data
@@ -96,11 +100,13 @@ function sage_blocks_callback($block)
 
 /**
  * Function to strip the `.blade.php` from a blade filename
+ * 
+ * @param string $filename
+ * @return string
  */
-function removeBladeExtension($filename)
-{
+function removeBladeExtension($filename) {
 
-  // Remove the unwanted extensions
+    // Remove the unwanted extensions
     $return = substr($filename, 0, strrpos($filename, '.blade.php'));
 
     // Always return
