@@ -97,12 +97,18 @@ if (! \function_exists('add_action')) {
  */
 function sage_blocks_callback($block) {
 
+    // Ensure properties exist
+    $block = array_merge([
+        'className' => '',
+        'align'     => '',
+    ], $block);
+
     // Set up the slug to be useful
     $slug = \str_replace('acf/', '', $block['name']);
 
     // Set up the block data
     $block['slug']    = $slug;
-    $block['classes'] = \implode(' ', [$block['slug'], $block['className'], 'align'.$block['align']]);
+    $block['classes'] = \implode(' ', array_filter([$block['slug'], $block['className'], 'align'.$block['align']]));
 
     \set_query_var('block', $block);
     \load_template($block['path'], false);
