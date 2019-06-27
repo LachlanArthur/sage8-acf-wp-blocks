@@ -41,10 +41,13 @@ if (! \function_exists('add_action')) {
             if (!$template->isDot() && !$template->isDir()) {
 
                 // Strip the file extension to get the slug
-                $slug = \pathinfo($template->getFilename(), PATHINFO_FILENAME);
+                $filename = \pathinfo($template->getFilename(), PATHINFO_FILENAME);
+
+                // Sanitize slug
+                $slug = \preg_replace('/[^a-z0-9-]/', '', $filename);
 
                 // Get header info from the found template file(s)
-                $file_path = \locate_template("{$dir}/{$slug}.php");
+                $file_path = \locate_template("{$dir}/{$filename}.php");
                 $file_headers = \get_file_data($file_path, [
                     'title'       => 'Title',
                     'description' => 'Description',
