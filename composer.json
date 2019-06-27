@@ -2,7 +2,7 @@
   "name": "lachlanarthur/sage8-acf-wp-blocks",
   "description": "Create Gutenberg blocks from Sage 8 templates and ACF fields.",
   "keywords": ["wordpress", "gutenberg", "advanced custom fields"],
-  "homepage": "https://github.com/LachlanArthur/sage-acf-gutenberg-blocks",
+  "homepage": "https://github.com/LachlanArthur/sage8-acf-wp-blocks",
   "license": "MIT",
   "authors": [
     {
