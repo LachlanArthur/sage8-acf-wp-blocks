@@ -1,17 +1,16 @@
 <?php
+/**
+ * Plugin Name: ACF Gutenberg blocks for Sage 8
+ * Description: Create Gutenberg blocks from Sage 8 templates and ACF fields. Adapted from Sage 9 version https://github.com/MWDelaney/sage-acf-wp-blocks
+ * Version: 1.0
+ * Author: Lachlan Arthur
+ * Author URI: http://lach.la
+ */
 
-// Adapted from Sage 9 version https://github.com/MWDelaney/sage-acf-wp-blocks
-
-namespace Roots\Sage\ACF_WP_Blocks;
+namespace LachlanArthur\ACF_WP_Blocks;
 
 // Check whether WordPress and ACF are available; bail if not.
 if (! \function_exists('acf_register_block')) { // Only available in ACF 5.8+
-    return;
-}
-if (! \function_exists('add_filter')) {
-    return;
-}
-if (! \function_exists('add_action')) {
     return;
 }
 

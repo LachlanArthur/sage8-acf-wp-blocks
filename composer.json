@@ -4,6 +4,7 @@
   "keywords": ["wordpress", "gutenberg", "advanced custom fields"],
   "homepage": "https://github.com/LachlanArthur/sage8-acf-wp-blocks",
   "license": "MIT",
+	"type": "wordpress-plugin",
   "authors": [
     {
       "name": "Lachlan Arthur",
@@ -18,9 +19,6 @@
     }
   ],
   "require": {
-    "php": ">=5.4"
-  },
-  "autoload": {
-    "files": ["sage-acf-gutenberg-blocks.php"]
+    "php": ">=7.0"
   }
 }
